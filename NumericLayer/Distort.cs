@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MathNet.Numerics.LinearAlgebra;
 
-namespace ImageDistorsion
+namespace ImageDistorsion.NumericLayer
 {
     using VecDbl = Vector<double>;
 
@@ -44,8 +44,8 @@ namespace ImageDistorsion
             VecDbl D = ABCD_Prime[3];
             VecDbl F(VecDbl vd)
             {
-                double s = vd[0] / (double) Height;
-                double t = vd[1] / (double) Width;
+                double s = vd[0] / Height;
+                double t = vd[1] / Width;
                 VecDbl ans = (1 - t) * ((1 - s) * A + s * B) +
                     t * ((1 - s) * D + s * C);
                 return ans;

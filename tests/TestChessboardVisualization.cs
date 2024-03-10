@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using ImageDistorsion.NumericLayer.NumericVisualization;
 using ImageDistorsion.NumericLayer;
 
-namespace ImageDistorsion.tests
+namespace ImageDistorsion.Tests
 {
     internal class TestChessboardVisualization
     {
