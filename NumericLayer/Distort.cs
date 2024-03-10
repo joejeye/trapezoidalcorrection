@@ -19,20 +19,69 @@ namespace ImageDistorsion.NumericLayer
         // The height of the original rectangular image
         public double Height;
 
+        private ConvexPolygon cvxPol;
+
+        public ConvexPolygon CvxPolygon
+        {
+            get
+            {
+                return cvxPol;
+            }
+
+            private set
+            {
+                cvxPol = value;
+            }
+        }
+
         /// <summary>
         /// The array of the vertex coordinates. Each vertex coordinate
         /// is a 2D vector of double-precision type. The order A->B->C->D
         /// follows the clock-wise direction
         /// </summary>
-        public VecDbl[] ABCD_Prime;
+        public VecDbl[] ABCD_Prime
+        {
+            get
+            {
+                return CvxPolygon.Vertices;
+            }
+        }
 
-        public DistortFunc DistortMapping { get; }
+        private DistortFunc disfun;
+
+        public DistortFunc DistortMapping
+        {
+            get
+            {
+                return disfun;
+            }
+
+            private set
+            {
+                disfun = value;
+            }
+        }
 
         public Distort(double w, double h, VecDbl[] abcd)
         {
+            CommonConstructor(w, h, new ConvexPolygon(abcd));
+        }
+
+        public Distort(double w, double h, ConvexPolygon cp)
+        {
+            CommonConstructor(w, h, cp);
+        }
+
+        private void CommonConstructor(double w, double h, ConvexPolygon cp)
+        {
             Width = w;
             Height = h;
-            ABCD_Prime = abcd;
+            ArgumentNullException.ThrowIfNull(cp);
+            if (cp.NSides != 4)
+            {
+                throw new ArgumentException("The polygon must be a quarilateral");
+            }
+            CvxPolygon = cp;
             DistortMapping = GetMapping();
         }
 
