@@ -8,10 +8,18 @@ namespace ImageDistorsion
         static void Main(string[] args)
         {
             /*Test the class ChessboardMarkers*/
-            TestChessboardVisualization.Run();
+            //TestChessboardVisualization.Run();
 
             /*Test class Distort*/
-            TestDistort.Run();            
+            //TestDistort.Run();
+
+            /* Test markers in quadrilateral
+             */
+            //TestQuadlatVisualization.Run();
+
+            /* Test the class InverseDistort
+             */
+            //TestInverseDistort.Run();
         }
     }
 }

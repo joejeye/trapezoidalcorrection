@@ -28,6 +28,13 @@ namespace ImageDistorsion.NumericLayer
             }
         }
 
+        private double Xmax { get => (from vd in Vertices select vd[0]).Max(); }
+        private double Xmin { get => (from vd in Vertices select vd[0]).Min(); }
+        private double Ymax { get => (from vd in Vertices select vd[1]).Max(); }
+        private double Ymin { get => (from vd in Vertices select vd[1]).Min(); }
+        public double MaxXDist { get => Xmax - Xmin; }
+        public double MaxYDist { get => Ymax - Ymin; }
+
         public ConvexPolygon(VecDbl[] vtcs)
         {
             Vertices = vtcs;
@@ -37,7 +44,7 @@ namespace ImageDistorsion.NumericLayer
         public ConvexPolygon(double[][] vertArr)
         {
             Vertices = (from vert in vertArr
-                        select VecDbl.Build.DenseOfArray(vert)).ToArray<VecDbl>();
+                        select VecDbl.Build.DenseOfArray(vert)).ToArray();
             CheckConvexity();
         }
 
@@ -128,6 +135,8 @@ namespace ImageDistorsion.NumericLayer
                 {
                     throw new Exception("The polygon is not convex");
                 }
+
+                prevVec = currVec;
             }
 
         }

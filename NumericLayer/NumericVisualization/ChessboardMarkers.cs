@@ -83,7 +83,7 @@ namespace ImageDistorsion.NumericLayer.NumericVisualization
 
         public void Reset()
         {
-            XIdx = 0;
+            XIdx = -1;
             YIdx = 0;
         }
 

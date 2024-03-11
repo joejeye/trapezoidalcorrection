@@ -13,6 +13,9 @@ namespace ImageDistorsion.NumericLayer.NumericVisualization
         public double y = y;
         public T color = color;
 
+        public NuMarker(Vector<double> vd, T color)
+            : this(vd[0], vd[1], color) { }
+
         public readonly Vector<double> GetVecDouble()
         {
             return Vector<double>.Build.DenseOfArray([x, y]);

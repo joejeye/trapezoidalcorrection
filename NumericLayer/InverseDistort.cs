@@ -52,6 +52,12 @@ namespace ImageDistorsion.NumericLayer
             XSpan = xspan;
             YSpan = yspan;
             GetMapping();
+            SetTolerance();
+
+            if (_convexPolygon == null || _Mapping == null)
+            {
+                throw new NullReferenceException("");
+            }
         }
 
         public delegate VecDbl InvDistrtFunc(VecDbl vd);
@@ -62,7 +68,7 @@ namespace ImageDistorsion.NumericLayer
             private set { _Mapping = value; }
         }
 
-        private double epsilon = 1e-6;
+        private double epsilon;
 
         public double Epsilon
         { 
@@ -70,7 +76,7 @@ namespace ImageDistorsion.NumericLayer
             private set { epsilon = value; }
         }
 
-        public void SetTolerance(double epsilon)
+        public void SetTolerance(double epsilon = 1e-6)
         {
             if (!(0 < epsilon && epsilon <= 0.01))
             {
@@ -91,7 +97,7 @@ namespace ImageDistorsion.NumericLayer
             VecDbl F(VecDbl point)
             {
                 // Find x
-                double x = 0;
+                double x;
                 Func<double, VecDbl> M = (double s) => s * B + (1 - s) * A;
                 Func<double, VecDbl> N = (double s) => s * C + (1 - s) * D;
                 double left = 0;
@@ -104,7 +110,6 @@ namespace ImageDistorsion.NumericLayer
                     {
                         if (isOn && IsAlign(M(mid), point, N(mid)))
                         {
-                            x = mid;
                             break;
                         } else
                         {
@@ -115,9 +120,10 @@ namespace ImageDistorsion.NumericLayer
                         left = mid;
                     }
                 }
+                x = (left + right) / 2;
 
                 // Find y
-                double y = 0;
+                double y;
                 Func<double, VecDbl> V = (double t) => t * D + (1 - t) * A;
                 Func<double, VecDbl> W = (double t) => t * C + (1 - t) * B;
                 left = 0;
@@ -130,7 +136,6 @@ namespace ImageDistorsion.NumericLayer
                     {
                         if (isOn && IsAlign(V(mid), point, W(mid)))
                         {
-                            y = mid;
                             break;
                         } else
                         {
@@ -141,6 +146,7 @@ namespace ImageDistorsion.NumericLayer
                         left = mid;
                     }
                 }
+                y = (left + right) / 2;
 
                 return VecDbl.Build.DenseOfArray([x, y]);
             }

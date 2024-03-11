@@ -65,11 +65,19 @@ namespace ImageDistorsion.NumericLayer
         public Distort(double w, double h, VecDbl[] abcd)
         {
             CommonConstructor(w, h, new ConvexPolygon(abcd));
+            if (cvxPol == null || disfun == null)
+            {
+                throw new NullReferenceException("");
+            }
         }
 
         public Distort(double w, double h, ConvexPolygon cp)
         {
             CommonConstructor(w, h, cp);
+            if (cvxPol == null || disfun == null)
+            {
+                throw new NullReferenceException("");
+            }
         }
 
         private void CommonConstructor(double w, double h, ConvexPolygon cp)

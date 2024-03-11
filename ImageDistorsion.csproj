@@ -5,12 +5,17 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+	<GenerateDocumentationFile>true</GenerateDocumentationFile>
+	<DocumentationFile>C:\1Ligo10\BenJeye\learn-n-play\C#\CsharpProjects\ImageDistorsion\Docs\Doc.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="MathNet.Numerics" Version="5.0.0" />
     <PackageReference Include="ScottPlot" Version="5.0.21" />
-    <PackageReference Include="ScottPlot.WinForms" Version="5.0.21" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Docs\" />
   </ItemGroup>
 
 </Project>

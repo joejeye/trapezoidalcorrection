@@ -15,8 +15,8 @@ namespace ImageDistorsion.NumericLayer
         public int NumSquaresV { get; }
         public double SqSideLenH { get; }
         public double SqSideLenV { get; }
-        public double ChessboardLenH { get; }
-        public double ChessboardLenV { get; }
+        public double ChessboardLenH { get => NumSquaresH * SqSideLenH; }
+        public double ChessboardLenV { get => NumSquaresV * SqSideLenV; }
 
         public Chessboard(int NSH = 10, int NSV = 10, int SLH = 3, int SLV = 3)
         {
@@ -24,8 +24,6 @@ namespace ImageDistorsion.NumericLayer
             NumSquaresV = NSV;
             SqSideLenH = SLH;
             SqSideLenV = SLV;
-            ChessboardLenH = NumSquaresH * SqSideLenH;
-            ChessboardLenV = NumSquaresV * SqSideLenV;
         }
         
         // Retrive the color at the position (x, y)

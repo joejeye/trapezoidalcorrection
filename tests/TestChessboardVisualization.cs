@@ -14,13 +14,13 @@ namespace ImageDistorsion.Tests
         {
             Chessboard ChsBrd = new();
             ChessboardMarkers CBMkrs = new(ChsBrd);
-            ScottPlot.Plot myPlot = new();
+            ImagePlotter plotter = new(fileName);
             foreach (var nmkr in CBMkrs)
             {
-                myPlot.Add.Marker(nmkr.x, nmkr.y, color: nmkr.color);
+                plotter.AddMarker(nmkr);
             }
 
-            myPlot.SavePng(GlobalConstants.ProjectTempFilePath + fileName + ".png", 500, 500);
+            plotter.SaveImagePNG();
             Console.WriteLine("TestChessboardVisualization finished");
         }
     }

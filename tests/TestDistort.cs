@@ -35,29 +35,19 @@ namespace ImageDistorsion.Tests
             ChessboardMarkers CBMkrs = new(board);
 
             // Create the blank plot
-            var myPlot = new ScottPlot.Plot();
+            ImagePlotter plotter = new(fileName);
             
             // Map each marker from the chessboard to the distorted quadrilateral and plot the marker
             foreach (var nmk in CBMkrs)
             {
                 var imgPnt = dstrt.DistortMapping(nmk.GetVecDouble());
                 NuMarker<ScottPlot.Color> imgMkr = new(imgPnt[0], imgPnt[1], nmk.color);
-                AddMkr(myPlot, imgMkr);
+                plotter.AddMarker(imgMkr.x, imgMkr.y, imgMkr.color);
             }
 
             // Save the image
-            myPlot.SavePng(GlobalConstants.ProjectTempFilePath + fileName + ".png", 500, 500);
+            plotter.SaveImagePNG();
             Console.WriteLine("TestDistort finished");
-        }
-
-        /// <summary>
-        /// Add one marker to the plot
-        /// </summary>
-        /// <param name="myPlot">The plot where the marker is drawn</param>
-        /// <param name="nmk">The marker to be drawn</param>
-        public static void AddMkr(ScottPlot.Plot myPlot, NuMarker<ScottPlot.Color> nmk)
-        {
-            myPlot.Add.Marker(nmk.x, nmk.y, color: nmk.color);
         }
     }
 }
