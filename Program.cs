@@ -20,6 +20,20 @@ namespace ImageDistorsion
             /* Test the class InverseDistort
              */
             //TestInverseDistort.Run();
+
+            /* Test the class TestPixelsToMarkers
+             */
+            //TestPixelsToMarkers.Run();
+
+            /* Test the workflow of creating chessboard markers and
+             * then converting the markers to pixels and then save the
+             * 2D array of pixels to a bitmap-format image
+             */
+            //TestMarkersToImage.Run();
+
+            /* Test save the bmp image of markers in a quadrilateral
+             */
+            //TestQuadToImage.Run();
         }
-    }
+}
 }

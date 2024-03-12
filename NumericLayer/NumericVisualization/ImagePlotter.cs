@@ -55,9 +55,20 @@ namespace ImageDistorsion.NumericLayer.NumericVisualization
             Ymax = Math.Max(Ymax, y);
         }
 
+        public void AddMarker(double x, double y, System.Drawing.Color color)
+        {
+            ScottPlot.Color theColor = new(color.R, color.G, color.B);
+            AddMarker(x, y, theColor);
+        }
+
+        public void AddMarker(NuMarker<System.Drawing.Color> nmk)
+        {
+            AddMarker(nmk.x, nmk.y, nmk.color);
+        }
+
         public void SaveImagePNG(int targetX = 500)
         {
-            int targetY = (int)Math.Floor((double)500 / XSpan * YSpan);
+            int targetY = (int)Math.Floor(500 / XSpan * YSpan);
             string fileFullName = SavePath + FileName + ".png";
             _myPlot.SavePng(fileFullName, targetX, targetY);
         }

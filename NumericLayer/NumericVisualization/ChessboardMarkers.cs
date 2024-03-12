@@ -36,14 +36,17 @@ namespace ImageDistorsion.NumericLayer.NumericVisualization
             }
         }
 
-        public ChessboardMarkers(Chessboard Chdb, int NPointsH = 31, int NPointsV = 31)
+        public ChessboardMarkers(Chessboard Chbd, int NPointsH = 31, int NPointsV = 31)
         {
-            this.Chbd = Chdb;
-            this.SideLenH = Chdb.ChessboardLenH;
-            this.SideLenV = Chbd.ChessboardLenV;
+            this.Chbd = Chbd;
+            this.SideLenH = Chbd.ChessboardLenH;
+            this.SideLenV = this.Chbd.ChessboardLenV;
             this.NPointsH = NPointsH;
             this.NPointsV = NPointsV;
         }
+
+        public ChessboardMarkers(Chessboard Chbd)
+            : this(Chbd, (int)Chbd.ChessboardLenH + 1, (int)Chbd.ChessboardLenV + 1) { }
 
         public ChsbdMrkrEnumr GetEnumerator()
         {

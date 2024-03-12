@@ -18,6 +18,13 @@ namespace ImageDistorsion.NumericLayer
         public double ChessboardLenH { get => NumSquaresH * SqSideLenH; }
         public double ChessboardLenV { get => NumSquaresV * SqSideLenV; }
 
+        /// <summary>
+        /// Create the chessboard
+        /// </summary>
+        /// <param name="NSH">Number of squares along the horizontal direction</param>
+        /// <param name="NSV">Number of squares along the vertical direction</param>
+        /// <param name="SLH">Horizontal side length of a square</param>
+        /// <param name="SLV">Vertical side length of a square</param>
         public Chessboard(int NSH = 10, int NSV = 10, int SLH = 3, int SLV = 3)
         {
             NumSquaresH = NSH;
