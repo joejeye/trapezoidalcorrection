@@ -18,7 +18,7 @@ namespace ImageDistorsion.NumericLayer.NumericVisualization
         public double YSpan { get => Ymax - Ymin; }  
 
         private ScottPlot.Plot _myPlot;
-        public ScottPlot.Plot MyPlot { get => _myPlot; private set => _myPlot = value; }
+        public ScottPlot.Plot MyPlot { get => _myPlot; set => _myPlot = value; }
 
         public string FileName { get; set; }
 

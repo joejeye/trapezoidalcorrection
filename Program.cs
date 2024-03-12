@@ -34,6 +34,10 @@ namespace ImageDistorsion
             /* Test save the bmp image of markers in a quadrilateral
              */
             //TestQuadToImage.Run();
+
+            /* Test convex hull algorithm
+             */
+            //TestConvexHull.Run();
         }
 }
 }

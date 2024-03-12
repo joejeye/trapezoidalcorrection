@@ -155,5 +155,96 @@ namespace ImageDistorsion.NumericLayer
             var M = Matrix<double>.Build.DenseOfColumnVectors([v1, v2]);
             return M.Determinant();
         }
+
+        /// <summary>
+        /// Create the convex hull of an array of points on the 2D plane
+        /// </summary>
+        /// <param name="points"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
+        public static ConvexPolygon ConvexHullOf(double[][] points)
+        {
+            // Check validity
+            foreach(var p in points)
+            {
+                if (p.Length != 2)
+                    throw new ArgumentException("Every point must has the length of 2");
+            }
+
+            // Check for 1-, 2-, 3-simplexes
+            if (points.Length <= 3)
+            {
+                return new ConvexPolygon(points);
+            }
+
+            // Get the left-most point
+            double[] lmP = LeftMostPoint(points);
+
+            // Record the points that has been marked as convex hull vertices
+            HashSet<Coord2ForHash<double>> vertedPnts = new(new Coord2Comparer<double>())
+            {
+                new Coord2ForHash<double>(lmP[0], lmP[1])
+            };
+
+            // Use the gift wrapping algorithm to find the convex hull
+            double[] currP = lmP;
+            while (true)
+            {
+                double[] nextVert = NextCvxHlVert(points, currP);
+                if (vertedPnts.Contains(new Coord2ForHash<double>(nextVert[0], nextVert[1])))
+                {
+                    break;
+                } else
+                {
+                    vertedPnts.Add(new Coord2ForHash<double>(nextVert[0], nextVert[1]));
+                    currP = nextVert;
+                }
+            }
+
+            VecDbl[] cvxVerts = ( from p in vertedPnts select p.ToVecDouble() ).ToArray();
+            return new ConvexPolygon(cvxVerts);
+        }
+
+        private static double[] LeftMostPoint(double[][] points)
+        {
+            return (from p in points
+                    orderby p[0] ascending
+                    select p).First();
+        }
+
+        private static double[] NextCvxHlVert(double[][] points, double[] currP)
+        {
+            VecDbl currPnt = VecDbl.Build.DenseOfArray(currP);
+            VecDbl? pivotPnt = null;
+            // Find the first point that does not coincide with currP
+            for (int i = 0; i < points.Length; i++)
+            {
+                if (points[i][0] != currP[0] || points[i][1] != currPnt[1])
+                {
+                    pivotPnt = VecDbl.Build.DenseOfArray(points[i]);
+                    break;
+                }
+            }
+
+            // The edge as a candidate of the boundary of the convex hull
+            VecDbl edge = pivotPnt - currPnt;
+
+            // Search for the next vertex point
+            for (int i = 0; i < points.Length; i++)
+            {
+                var itP = points[i];
+                if (itP[0] == currP[0] && itP[1] == currP[1])
+                {
+                    continue;
+                }
+                VecDbl pivotVec = VecDbl.Build.DenseOfArray(itP) - currPnt;
+                if (XProdDirVol(pivotVec, edge) < 0) // Point i is on the left of the edge
+                {
+                    pivotPnt = VecDbl.Build.DenseOfArray(itP);
+                    edge = pivotPnt - currPnt;
+                }
+            }
+            return [pivotPnt[0], pivotPnt[1]];
+        }
     }
 }
