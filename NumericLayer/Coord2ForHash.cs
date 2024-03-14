@@ -7,16 +7,10 @@ using MathNet.Numerics.LinearAlgebra;
 
 namespace ImageDistorsion.NumericLayer
 {
-    internal readonly struct Coord2ForHash<T>
+    public readonly struct Coord2ForHash<T>(T x, T y)
     {
-        public readonly T x; 
-        public readonly T y;
-
-        public Coord2ForHash(T x, T y)
-        {
-            this.x = x;
-            this.y = y;
-        }
+        public readonly T x = x; 
+        public readonly T y = y;
 
         public T[] ToArray()
         {
@@ -27,20 +21,25 @@ namespace ImageDistorsion.NumericLayer
         {
             return Vector<double>.Build.DenseOfArray([(dynamic)x, (dynamic)y]);
         }
+
+        /// <summary>
+        /// Get the equality comparer function for hashing
+        /// </summary>
+        /// <param name="tolerance"></param>
+        /// <returns></returns>
+        public static Coord2Comparer<T> GetEqCmpr(double tolerance = 1e-6)
+        {
+            return new(tolerance);
+        }
     }
 
-    internal class Coord2Comparer<T> : IEqualityComparer<Coord2ForHash<T>>
+    public class Coord2Comparer<T>(double tolerance = 1e-6) : IEqualityComparer<Coord2ForHash<T>>
     {
-        private double tolerance { get; }
-
-        public Coord2Comparer(double tolerance = 1e-6)
-        {
-            this.tolerance = tolerance;
-        }
+        private double Tolerance { get; } = tolerance;
 
         private bool WithinTol(T x, T y)
         {
-            return Math.Abs((double)((dynamic)x -  (dynamic)y)) <= tolerance;
+            return Math.Abs((double)((dynamic)x -  (dynamic)y)) <= Tolerance;
         }
 
         public bool Equals(Coord2ForHash<T> a, Coord2ForHash<T> b)

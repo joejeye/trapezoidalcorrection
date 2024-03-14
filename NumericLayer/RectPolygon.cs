@@ -9,8 +9,21 @@ namespace ImageDistorsion.NumericLayer
 {
     using VecDbl = Vector<double>;
 
+    /// <summary>
+    /// Rectangle
+    /// </summary>
     internal class RectPolygon : ConvexPolygon
     {
+        /// <summary>
+        /// The coordinates of lower-left (LL), lower-right (LR),
+        /// upper-right (UR), upper-left (UL) vertices of the 
+        /// rectangle
+        /// </summary>
+        public double[] LL { get => [Xmin, Ymin]; }
+        public double[] LR { get => [Xmax, Ymin]; }
+        public double[] UR { get => [Xmax, Ymax]; }
+        public double[] UL { get => [Xmin, Ymax]; }
+
         public RectPolygon(VecDbl lowerLeftVertex, VecDbl upperRightVertex)
             : base(PrepareForBase(lowerLeftVertex, upperRightVertex))
         {

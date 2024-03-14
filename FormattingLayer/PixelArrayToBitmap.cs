@@ -7,29 +7,41 @@ using System.Drawing;
 
 namespace ImageDistorsion.FormattingLayer
 {
-    internal class PixelArrayToBitmap(Color[,] pa)
+    public class PixelArrayToBitmap
     {
-        public Color[,] PixArr { get; } = pa;
+        public Color[,] PixArr { get; }
 
-        public void SaveToBmp(string filePath)
+        public Bitmap ImgBmp { get; private set; }
+
+        public PixelArrayToBitmap(Color[,] pixArr)
         {
-            Bitmap img = new(PixArr.GetLength(0), PixArr.GetLength(1));
+            ArgumentNullException.ThrowIfNull(pixArr);
+            PixArr = pixArr;
+            Covert();
+        }
+
+        private void Covert()
+        {
+            ImgBmp = new(PixArr.GetLength(0), PixArr.GetLength(1));
             for (int colIdx = 0; colIdx < PixArr.GetLength(0); colIdx++)
             {
                 int NRows = PixArr.GetLength(1);
                 for (int rowIdx = 0; rowIdx < NRows; rowIdx++)
                 {
-                    img.SetPixel(colIdx, rowIdx, PixArr[colIdx, NRows - 1 - rowIdx]);
+                    ImgBmp.SetPixel(colIdx, rowIdx, PixArr[colIdx, rowIdx]);
                 }
             }
+        }
 
+        public void SaveToBmp(string filePath)
+        {
             if (!filePath.EndsWith(@".bmp", StringComparison.OrdinalIgnoreCase))
             {
                 filePath = filePath + @".bmp";
             }
 
-            img.Save(filePath, System.Drawing.Imaging.ImageFormat.Bmp);
-            img.Dispose();
+            ImgBmp.Save(filePath, System.Drawing.Imaging.ImageFormat.Bmp);
+            ImgBmp.Dispose();
             Console.WriteLine($"Image saved to {filePath} successfully");
         }
     }

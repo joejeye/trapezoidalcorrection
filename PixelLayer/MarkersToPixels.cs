@@ -8,7 +8,7 @@ using ImageDistorsion.NumericLayer.NumericVisualization;
 
 namespace ImageDistorsion.PixelLayer
 {
-    internal class MarkersToPixels
+    public class MarkersToPixels
     {
         /// <summary>
         /// Number of horiztonal pixels
@@ -158,8 +158,8 @@ namespace ImageDistorsion.PixelLayer
         /// <returns>The row-column indexes representation of the lattice point</returns>
         private RowColIdx NrstLatticPnt(double x, double y)
         {
-            var rowIdx = (int) Math.Round((x - Xmin) / SpacingX);
-            var colIdx = (int) Math.Round((y - Ymin) / SpacingY);
+            var colIdx = (int) Math.Round((x - Xmin) / SpacingX);
+            var rowIdx = NVertPixs - 1 - (int) Math.Round((y - Ymin) / SpacingY);
             return new RowColIdx(rowIdx, colIdx);
         }
 
@@ -185,7 +185,7 @@ namespace ImageDistorsion.PixelLayer
             {
                 for (int rowIdx = 0; rowIdx < NVertPixs; rowIdx++)
                 {
-                    RowColIdx rcIdx = new(colIdx, rowIdx);
+                    RowColIdx rcIdx = new(rowIdx, colIdx);
                     /* Find the average color if multiple markers got
                      * mapped to one pixel
                      */
@@ -222,7 +222,7 @@ namespace ImageDistorsion.PixelLayer
         }
     }
 
-    internal readonly struct RowColIdx(int rowIdx, int colIdx)
+    public readonly struct RowColIdx(int rowIdx, int colIdx)
     {
         public int RowIdx { get; } = rowIdx;
         public int ColIdx { get; } = colIdx;

@@ -9,7 +9,7 @@ namespace ImageDistorsion.NumericLayer
 {
     using VecDbl = Vector<double>;
 
-    internal class InverseDistort
+    public class InverseDistort
     {
         private ConvexPolygon _convexPolygon;
 

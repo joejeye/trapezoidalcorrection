@@ -10,7 +10,7 @@ namespace ImageDistorsion.NumericLayer
 {
     using VecDbl = Vector<double>;
 
-    internal class ConvexPolygon
+    public class ConvexPolygon
     {
         /// <summary>
         /// The array of the vertices of the polygon
@@ -28,10 +28,10 @@ namespace ImageDistorsion.NumericLayer
             }
         }
 
-        private double Xmax { get => (from vd in Vertices select vd[0]).Max(); }
-        private double Xmin { get => (from vd in Vertices select vd[0]).Min(); }
-        private double Ymax { get => (from vd in Vertices select vd[1]).Max(); }
-        private double Ymin { get => (from vd in Vertices select vd[1]).Min(); }
+        protected double Xmax { get => (from vd in Vertices select vd[0]).Max(); }
+        protected double Xmin { get => (from vd in Vertices select vd[0]).Min(); }
+        protected double Ymax { get => (from vd in Vertices select vd[1]).Max(); }
+        protected double Ymin { get => (from vd in Vertices select vd[1]).Min(); }
         public double MaxXDist { get => Xmax - Xmin; }
         public double MaxYDist { get => Ymax - Ymin; }
 

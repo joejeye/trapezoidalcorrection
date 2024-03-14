@@ -7,7 +7,7 @@ using MathNet.Numerics.LinearAlgebra;
 
 namespace ImageDistorsion.NumericLayer.NumericVisualization
 {
-    internal struct NuMarker<T>(double x, double y, T color)
+    public struct NuMarker<T>(double x, double y, T color)
     {
         public double x = x;
         public double y = y;
