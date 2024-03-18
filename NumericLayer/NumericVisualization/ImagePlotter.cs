@@ -41,6 +41,19 @@ namespace ImageDistorsion.NumericLayer.NumericVisualization
             Ymax = double.MinValue;
         }
 
+        public ImagePlotter()
+        {
+            SavePath = "";
+
+            _myPlot = new();
+            MyPlot.Axes.Margins(0, 0);
+
+            Xmin = double.MaxValue;
+            Xmax = double.MinValue;
+            Ymin = double.MaxValue;
+            Ymax = double.MinValue;
+        }
+
         public void AddMarker(NuMarker<ScottPlot.Color> nmk)
         {
             AddMarker(nmk.x, nmk.y, nmk.color);
@@ -66,10 +79,14 @@ namespace ImageDistorsion.NumericLayer.NumericVisualization
             AddMarker(nmk.x, nmk.y, nmk.color);
         }
 
-        public void SaveImagePNG(int targetX = 500)
+        public void SaveImagePNG(int targetX = 500, string saveFileFullPath = "")
         {
             int targetY = (int)Math.Floor(500 / XSpan * YSpan);
-            string fileFullName = SavePath + FileName + ".png";
+            string fileFullName;
+            if (saveFileFullPath.Length == 0)
+                fileFullName = SavePath + FileName + ".png";
+            else
+                fileFullName = saveFileFullPath;
             _myPlot.SavePng(fileFullName, targetX, targetY);
         }
     }

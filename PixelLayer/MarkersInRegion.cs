@@ -64,7 +64,8 @@ namespace ImageDistorsion.PixelLayer
 
         private void Crop(int[] upperLeftRowCol, int[] lowerRightRowCol)
         {
-            PixArr.Crop(upperLeftRowCol, lowerRightRowCol);
+            List<RowColForHash> VertsOnImg = []; // A dummy list for compatibility
+            PixArr.Crop(upperLeftRowCol, lowerRightRowCol, ref VertsOnImg);
             for (int vertexIdx = 0; vertexIdx < VertexRowColIdxs.Length; vertexIdx++)
             {
                 VertexRowColIdxs[vertexIdx][0] -= upperLeftRowCol[0];

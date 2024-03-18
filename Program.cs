@@ -38,6 +38,14 @@ namespace ImageDistorsion
             /* Test convex hull algorithm
              */
             //TestConvexHull.Run();
+
+            /* Test the class DistortedVisualizationMapping
+             */
+            //TestDistVisMap.Run();
+
+            /* Test the numeric layer pullback
+             */
+            TestNuPullback.Run();
         }
 }
 }

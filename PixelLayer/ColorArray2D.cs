@@ -27,18 +27,12 @@ namespace ImageDistorsion.PixelLayer
 
         public ColorArray2D(string filePath)
         {
-            try
-            {
-                _ImgBmp = new Bitmap(filePath);
-            } catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
+            _ImgBmp = new Bitmap(filePath);
+        }
 
-            if (_ImgBmp == null)
-            {
-                throw new NullReferenceException("The bitmap image must not be empty");
-            }
+        public ColorArray2D(Bitmap imgBmp)
+        {
+            _ImgBmp = new(imgBmp);
         }
 
         /// <summary>
@@ -57,7 +51,7 @@ namespace ImageDistorsion.PixelLayer
         /// <param name="upperLeftRowCol"></param>
         /// <param name="lowerRightRowCol"></param>
         /// <returns></returns>
-        public void Crop(int[] upperLeftRowCol, int[] lowerRightRowCol)
+        public void Crop(int[] upperLeftRowCol, int[] lowerRightRowCol, ref List<RowColForHash> VertsOnImg)
         {
             int width = lowerRightRowCol[1] - upperLeftRowCol[1] + 1;
             int height = lowerRightRowCol[0] - upperLeftRowCol[0] + 1;
@@ -77,6 +71,12 @@ namespace ImageDistorsion.PixelLayer
                 }
             }
             ImgBmp = newImg;
+
+            // Update the vertices on the image
+            for (int i = 0; i < VertsOnImg.Count; i++)
+            {
+                VertsOnImg[i] = new(VertsOnImg[i].RowIdx - upperLeftRowCol[0], VertsOnImg[i].ColIdx - upperLeftRowCol[1]);
+            }
         }
     }
 }

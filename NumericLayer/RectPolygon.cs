@@ -12,7 +12,7 @@ namespace ImageDistorsion.NumericLayer
     /// <summary>
     /// Rectangle
     /// </summary>
-    internal class RectPolygon : ConvexPolygon
+    public class RectPolygon : ConvexPolygon
     {
         /// <summary>
         /// The coordinates of lower-left (LL), lower-right (LR),
@@ -28,6 +28,15 @@ namespace ImageDistorsion.NumericLayer
             : base(PrepareForBase(lowerLeftVertex, upperRightVertex))
         {
             ValidateArgs(lowerLeftVertex, upperRightVertex);
+        }
+
+        public RectPolygon(double[] bottomLeftPoint, double[] topRightPoint)
+            : this(VecDbl.Build.DenseOfArray(bottomLeftPoint), VecDbl.Build.DenseOfArray(topRightPoint))
+        {
+            if (bottomLeftPoint.Length != 2 || topRightPoint.Length != 2)
+            {
+                throw new ArgumentException("The length of the input array should be 2");
+            }
         }
 
         private static VecDbl[] PrepareForBase(VecDbl lowerLeftVertex, VecDbl upperRightVertex)

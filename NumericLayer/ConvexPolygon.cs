@@ -28,10 +28,10 @@ namespace ImageDistorsion.NumericLayer
             }
         }
 
-        protected double Xmax { get => (from vd in Vertices select vd[0]).Max(); }
-        protected double Xmin { get => (from vd in Vertices select vd[0]).Min(); }
-        protected double Ymax { get => (from vd in Vertices select vd[1]).Max(); }
-        protected double Ymin { get => (from vd in Vertices select vd[1]).Min(); }
+        public double Xmax { get => (from vd in Vertices select vd[0]).Max(); }
+        public double Xmin { get => (from vd in Vertices select vd[0]).Min(); }
+        public double Ymax { get => (from vd in Vertices select vd[1]).Max(); }
+        public double Ymin { get => (from vd in Vertices select vd[1]).Min(); }
         public double MaxXDist { get => Xmax - Xmin; }
         public double MaxYDist { get => Ymax - Ymin; }
 
