@@ -8,32 +8,52 @@ using ImageDistorsion.NumericLayer;
 using ImageDistorsion.NumericLayer.NumericVisualization;
 using MathNet.Numerics.LinearAlgebra;
 using System.Drawing;
+using System.Runtime.Versioning;
 
 namespace ImageDistorsion.PixelLayer
 {
     using VecDbl = Vector<double>;
 
+    /// <summary>
+    /// The class that enmerates the markers in the selected region of an image
+    /// </summary>
+    [SupportedOSPlatform("windows")]
     public class MarkersInRegion : IEnumerable
     {
+        
+        private ColorArray2D _PixArr;
+
         /// <summary>
         /// The object that can access the color info of an image at
         /// the i-th row and the j-th column using the overloaded 
         /// operator [i, j]. Note, this is not an array.
         /// </summary>
-        private ColorArray2D _PixArr;
         public ColorArray2D PixArr { get => _PixArr; private set => _PixArr = value; }
+
+        private ConvexPolygon _SelectedRegion;
 
         /// <summary>
         /// The selected region in the image that is to be deformed, represented
         /// as a convex polygon
         /// </summary>
-        private ConvexPolygon _SelectedRegion;
         public ConvexPolygon SelectedRegion { get => _SelectedRegion; private set => _SelectedRegion = value; }
 
+        /// <summary>
+        /// The indexes of the vertices of the selected region in the image
+        /// </summary>
         public int[][] VertexRowColIdxs { get; private set; }
 
+        /// <summary>
+        /// The mapping object between the row and column indexes and the coordinates
+        /// </summary>
         public RowCol_Coord_Mapping RCCrdMap { get; private set; }
 
+        /// <summary>
+        /// Construct the object that contains the markers in the selected region
+        /// </summary>
+        /// <param name="ca2d"></param>
+        /// <param name="vertexRowColIdxs"></param>
+        /// <exception cref="IndexOutOfRangeException"></exception>
         public MarkersInRegion(ColorArray2D ca2d, int[][] vertexRowColIdxs)
         {
             _PixArr = ca2d;
@@ -55,9 +75,18 @@ namespace ImageDistorsion.PixelLayer
             _SelectedRegion = new ConvexPolygon(nuVertices.ToArray());
         }
 
+        /// <summary>
+        /// Construct the object that contains the markers in the selected region
+        /// </summary>
+        /// <param name="fileFullPath"></param>
+        /// <param name="VertexRowColIdxs"></param>
         public MarkersInRegion(string fileFullPath, int[][] VertexRowColIdxs)
             : this(new ColorArray2D(fileFullPath), VertexRowColIdxs) { }
 
+        /// <summary>
+        /// Implement the GetEnumerator method for the class MarkersInRegion
+        /// </summary>
+        /// <returns></returns>
         public MIREnumerator GetEnumerator() => new(this);
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
@@ -96,24 +125,39 @@ namespace ImageDistorsion.PixelLayer
         }
     }
 
+    /// <summary>
+    /// The enumerator for the class MarkersInRegion
+    /// </summary>
+    [SupportedOSPlatform("windows")]
     public class MIREnumerator : IEnumerator
     {
         private MarkersInRegion MIR { get; }
         private int RowIdx { set; get; }
         private int ColIdx { set; get; }
 
+        /// <summary>
+        /// Implement the enumerator for the class MarkersInRegion
+        /// </summary>
+        /// <param name="mir"></param>
         public MIREnumerator(MarkersInRegion mir)
         {
             MIR = mir;
             Reset();
         }
 
+        /// <summary>
+        /// Implement the Reset method for the enumerator
+        /// </summary>
         public void Reset()
         {
             RowIdx = 0;
             ColIdx = -1;
         }
 
+        /// <summary>
+        /// Implement the MoveNext method for the enumerator
+        /// </summary>
+        /// <returns></returns>
         public bool MoveNext()
         {
             if (++ColIdx < MIR.PixArr.NHorizontalPix)
@@ -143,6 +187,9 @@ namespace ImageDistorsion.PixelLayer
             }
         }
 
+        /// <summary>
+        /// Implement the Current property for the enumerator
+        /// </summary>
         public NuMarker<Color> Current
         {
             get

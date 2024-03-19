@@ -15,21 +15,42 @@ namespace ImageDistorsion.NumericLayer
     public class RectPolygon : ConvexPolygon
     {
         /// <summary>
-        /// The coordinates of lower-left (LL), lower-right (LR),
-        /// upper-right (UR), upper-left (UL) vertices of the 
-        /// rectangle
+        /// The coordinates of the lower left vertex
         /// </summary>
         public double[] LL { get => [Xmin, Ymin]; }
+
+        /// <summary>
+        /// The coordinates of the lower right vertex
+        /// </summary>
         public double[] LR { get => [Xmax, Ymin]; }
+
+        /// <summary>
+        /// The coordinates of the upper right vertex
+        /// </summary>
         public double[] UR { get => [Xmax, Ymax]; }
+
+        /// <summary>
+        /// The coordinates of the upper left vertex
+        /// </summary>
         public double[] UL { get => [Xmin, Ymax]; }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="lowerLeftVertex"></param>
+        /// <param name="upperRightVertex"></param>
         public RectPolygon(VecDbl lowerLeftVertex, VecDbl upperRightVertex)
             : base(PrepareForBase(lowerLeftVertex, upperRightVertex))
         {
             ValidateArgs(lowerLeftVertex, upperRightVertex);
         }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="bottomLeftPoint"></param>
+        /// <param name="topRightPoint"></param>
+        /// <exception cref="ArgumentException"></exception>
         public RectPolygon(double[] bottomLeftPoint, double[] topRightPoint)
             : this(VecDbl.Build.DenseOfArray(bottomLeftPoint), VecDbl.Build.DenseOfArray(topRightPoint))
         {

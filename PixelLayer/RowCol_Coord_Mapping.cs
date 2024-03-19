@@ -18,19 +18,34 @@ namespace ImageDistorsion.PixelLayer
     /// </summary>
     public class RowCol_Coord_Mapping
     {
-        // The number of pixels along the horizontal
-        // and the vertical directions respectively
+        /// <summary>
+        /// The number of pixels along the horizontal direction
+        /// </summary>
         public int NHorizontalPixs { get; private set; }
+
+        /// <summary>
+        /// The number of pixels along the vertical direction
+        /// </summary>
         public int NVerticalPixs { get; private set; }
 
-        // The length of the image in the Euclidean 
-        // coordinate system along x- and y- axes
-        // respectively
+        /// <summary>
+        /// The length of the image in the Euclidean coordinate system
+        /// </summary>
         public double XSpan { get; private set; }
+
+        /// <summary>
+        /// The height of the image in the Euclidean coordinate system
+        /// </summary>
         public double YSpan { get; private set; }
 
-        // The numeric point spacing along x- and y- axes respectively
+        /// <summary>
+        /// The spacing between the pixels along the horizontal direction
+        /// </summary>
         public double SpacingX { get => XSpan / (NHorizontalPixs - 1); }
+
+        /// <summary>
+        /// The spacing between the pixels along the vertical direction
+        /// </summary>
         public double SpacingY { get => YSpan / (NVerticalPixs - 1); }
 
         /// <summary>

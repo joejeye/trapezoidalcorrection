@@ -10,16 +10,9 @@ namespace ImageDistorsion
             /*Test the class ChessboardMarkers*/
             //TestChessboardVisualization.Run();
 
-            /*Test class Distort*/
-            //TestDistort.Run();
-
             /* Test markers in quadrilateral
              */
             //TestQuadlatVisualization.Run();
-
-            /* Test the class InverseDistort
-             */
-            //TestInverseDistort.Run();
 
             /* Test the class TestPixelsToMarkers
              */
@@ -45,7 +38,7 @@ namespace ImageDistorsion
 
             /* Test the numeric layer pullback
              */
-            TestNuPullback.Run();
+            //TestNuPullback.Run();
         }
 }
 }

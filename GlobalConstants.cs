@@ -8,7 +8,14 @@ namespace ImageDistorsion
 {
     internal class GlobalConstants
     {
-        public static string ProjectRootPath = @"C:\1Ligo10\BenJeye\learn-n-play\C#\CsharpProjects\ImageDistorsion\";
-        public static string ProjectTempFilePath = @"C:\1Ligo10\BenJeye\learn-n-play\C#\CsharpProjects\ImageDistorsion\TempFiles\";
+        /// <summary>
+        /// Path to the root of the project
+        /// </summary>
+        public const string ProjectRootPath = @"";
+
+        /// <summary>
+        /// Path to the folder where the temporary files are stored
+        /// </summary>
+        public const string ProjectTempFilePath = @"";
     }
 }

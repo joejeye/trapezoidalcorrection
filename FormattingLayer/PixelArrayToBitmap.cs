@@ -4,15 +4,30 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using System.Runtime.Versioning;
 
 namespace ImageDistorsion.FormattingLayer
 {
+    /// <summary>
+    /// Convert a 2D pixel array to a bmp file
+    /// </summary>
+    [SupportedOSPlatform("windows")]
     public class PixelArrayToBitmap
     {
+        /// <summary>
+        /// The 2D pixel array to be converted to the bmp file
+        /// </summary>
         public Color[,] PixArr { get; }
 
-        public Bitmap ImgBmp { get; private set; }
+        /// <summary>
+        /// The bitmap image created from the pixel array
+        /// </summary>
+        public Bitmap? ImgBmp { get; private set; }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="pixArr">The 2D pixel array to be converted to the bmp file</param>
         public PixelArrayToBitmap(Color[,] pixArr)
         {
             ArgumentNullException.ThrowIfNull(pixArr);
@@ -33,6 +48,10 @@ namespace ImageDistorsion.FormattingLayer
             }
         }
 
+        /// <summary>
+        /// Save the image to a bmp file with the given file path
+        /// </summary>
+        /// <param name="filePath"></param>
         public void SaveToBmp(string filePath)
         {
             if (!filePath.EndsWith(@".bmp", StringComparison.OrdinalIgnoreCase))
@@ -40,6 +59,7 @@ namespace ImageDistorsion.FormattingLayer
                 filePath = filePath + @".bmp";
             }
 
+            ArgumentNullException.ThrowIfNull(ImgBmp);
             ImgBmp.Save(filePath, System.Drawing.Imaging.ImageFormat.Bmp);
             ImgBmp.Dispose();
             Console.WriteLine($"Image saved to {filePath} successfully");

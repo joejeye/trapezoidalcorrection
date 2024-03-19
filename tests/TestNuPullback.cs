@@ -12,10 +12,19 @@ namespace ImageDistorsion.Tests
 {
     using VecDbl = Vector<double>;
 
+    /// <summary>
+    /// The test class for the class ImageDistorsion.NumericLayer.PullbackCorrection
+    /// </summary>
     public class TestNuPullback
     {
-        public const string subfolder = @"C:\1Ligo10\BenJeye\learn-n-play\C#\CsharpProjects\ImageDistorsion\TempFiles\TestNuPullback";
+        /// <summary>
+        /// The folder/directory where the image files are saved
+        /// </summary>
+        public const string subfolder = @".\TempFiles\TestNuPullback";
 
+        /// <summary>
+        /// Run the test
+        /// </summary>
         public static void Run()
         {
             /* The corrected domain */

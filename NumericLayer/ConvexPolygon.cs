@@ -10,6 +10,9 @@ namespace ImageDistorsion.NumericLayer
 {
     using VecDbl = Vector<double>;
 
+    /// <summary>
+    /// A class to represent a convex polygon in 2D space. The polygon is defined by an array of vertices.
+    /// </summary>
     public class ConvexPolygon
     {
         /// <summary>
@@ -28,19 +31,50 @@ namespace ImageDistorsion.NumericLayer
             }
         }
 
+        /// <summary>
+        /// The maximum x-coordinate of the vertices
+        /// </summary>
         public double Xmax { get => (from vd in Vertices select vd[0]).Max(); }
+
+        /// <summary>
+        /// The minimum x-coordinate of the vertices
+        /// </summary>
         public double Xmin { get => (from vd in Vertices select vd[0]).Min(); }
+        
+        /// <summary>
+        /// The maximum y-coordinate of the vertices
+        /// </summary>
         public double Ymax { get => (from vd in Vertices select vd[1]).Max(); }
+        
+        /// <summary>
+        /// The minimum y-coordinate of the vertices
+        /// </summary>
         public double Ymin { get => (from vd in Vertices select vd[1]).Min(); }
+        
+        /// <summary>
+        /// The diameter of the polygon in the x-direction
+        /// </summary>
         public double MaxXDist { get => Xmax - Xmin; }
+        
+        /// <summary>
+        /// The diameter of the polygon in the y-direction
+        /// </summary>
         public double MaxYDist { get => Ymax - Ymin; }
 
+        /// <summary>
+        /// Construct a convex polygon from an array of vertices. Each vertex is a 2D vector.
+        /// </summary>
+        /// <param name="vtcs"></param>
         public ConvexPolygon(VecDbl[] vtcs)
         {
             Vertices = vtcs;
             CheckConvexity();
         }
 
+        /// <summary>
+        /// Construct a convex polygon from an array of vertices. Each vertex is a 2-element array of double.
+        /// </summary>
+        /// <param name="vertArr"></param>
         public ConvexPolygon(double[][] vertArr)
         {
             Vertices = (from vert in vertArr
@@ -244,6 +278,7 @@ namespace ImageDistorsion.NumericLayer
                     edge = pivotPnt - currPnt;
                 }
             }
+            ArgumentNullException.ThrowIfNull(pivotPnt);
             return [pivotPnt[0], pivotPnt[1]];
         }
     }

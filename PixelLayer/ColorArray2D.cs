@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using System.Runtime.Versioning;
 
 namespace ImageDistorsion.PixelLayer
 {
@@ -14,22 +15,39 @@ namespace ImageDistorsion.PixelLayer
     /// column. The pixel at [0, 0] is located at the upper left corner
     /// of the image.
     /// </summary>
+    [SupportedOSPlatform("windows")]
     public class ColorArray2D
     {
         private Bitmap _ImgBmp;
+
+        /// <summary>
+        /// The bitmap image
+        /// </summary>
         public Bitmap ImgBmp { get => _ImgBmp; private set => _ImgBmp = value; }
 
         /// <summary>
-        /// Number of pixels along the horizontal and the vertical directions
+        /// Number of pixels along the horizontal direction
         /// </summary>
         public int NHorizontalPix => ImgBmp.Width;
+
+        /// <summary>
+        /// Number of pixels along the vertical direction
+        /// </summary>
         public int NVerticalPix => ImgBmp.Height;
 
+        /// <summary>
+        /// Construct the class by loading the image from the file path
+        /// </summary>
+        /// <param name="filePath"></param>
         public ColorArray2D(string filePath)
         {
             _ImgBmp = new Bitmap(filePath);
         }
 
+        /// <summary>
+        /// Construct the class by loading the image from the bitmap
+        /// </summary>
+        /// <param name="imgBmp"></param>
         public ColorArray2D(Bitmap imgBmp)
         {
             _ImgBmp = new(imgBmp);
@@ -50,6 +68,7 @@ namespace ImageDistorsion.PixelLayer
         /// </summary>
         /// <param name="upperLeftRowCol"></param>
         /// <param name="lowerRightRowCol"></param>
+        /// <param name="VertsOnImg">The variable where the result is to be stored</param>
         /// <returns></returns>
         public void Crop(int[] upperLeftRowCol, int[] lowerRightRowCol, ref List<RowColForHash> VertsOnImg)
         {
@@ -61,7 +80,7 @@ namespace ImageDistorsion.PixelLayer
             }   
             //ImgBmp = ImgBmp.Clone(new Rectangle(upperLeftRowCol[1], upperLeftRowCol[0], width, height), ImgBmp.PixelFormat);
             // Manually crop the image
-            Bitmap newImg = new Bitmap(width, height);
+            Bitmap newImg = new(width, height);
             for (int i = 0; i < height; i++)
             {
                 for (int j = 0; j < width; j++)

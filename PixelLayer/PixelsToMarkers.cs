@@ -6,9 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using ImageDistorsion.NumericLayer.NumericVisualization;
+using System.Runtime.Versioning;
 
 namespace ImageDistorsion.PixelLayer
 {
+    [SupportedOSPlatform("windows")]
     internal class PixelsToMarkers : IEnumerable
     {
         private ColorArray2D _ColorArr;
@@ -36,6 +38,7 @@ namespace ImageDistorsion.PixelLayer
 
     }
 
+    [SupportedOSPlatform("windows")]
     internal class PTMEnumerator : IEnumerator
     {
         private PixelsToMarkers PTM { get; }

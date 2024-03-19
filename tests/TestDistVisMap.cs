@@ -7,12 +7,14 @@ using System.Drawing;
 using ImageDistorsion.PixelLayer;
 using ImageDistorsion.NumericLayer;
 using ImageDistorsion.NumericLayer.NumericVisualization;
+using System.Runtime.Versioning;
 
 namespace ImageDistorsion.Tests
 {
     /// <summary>
     /// Test the class DistortedVisualizationMapping
     /// </summary>
+    [SupportedOSPlatform("windows")]
     public class TestDistVisMap
     {
         private const string subfolder = @"TestDistVisMap\";

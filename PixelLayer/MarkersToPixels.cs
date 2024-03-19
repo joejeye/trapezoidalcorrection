@@ -8,58 +8,72 @@ using ImageDistorsion.NumericLayer.NumericVisualization;
 
 namespace ImageDistorsion.PixelLayer
 {
+    /// <summary>
+    /// Convert markers to pixels
+    /// </summary>
     public class MarkersToPixels
     {
+        private int _NHrzntlPixs;
+
         /// <summary>
         /// Number of horiztonal pixels
         /// </summary>
-        private int _NHrzntlPixs;
         public int NHrzntlPixs { get => _NHrzntlPixs; private set => _NHrzntlPixs = value; }
+
+        private int _NVertPixs;
 
         /// <summary>
         /// Number of vertical pixels
         /// </summary>
-        private int _NVertPixs;
         public int NVertPixs { get => _NVertPixs; private set => _NVertPixs = value; }
+
+        private double _Xmin;
 
         /// <summary>
         /// The min x-coordinate of the markers
         /// </summary>
-        private double _Xmin;
         public double Xmin { get => _Xmin; private set => _Xmin = value; }
 
+        private double _Xmax;
 
         /// <summary>
         /// The max x-coordinate of the markers
         /// </summary>
-        private double _Xmax;
         public double Xmax { get => _Xmax; private set => _Xmax = value; }
 
+        private double _Ymin;
 
         /// <summary>
         /// The min y-coordinate of the markers
         /// </summary>
-        private double _Ymin;
         public double Ymin { get => _Ymin; private set => _Ymin = value; }
+
+        private double _Ymax;
 
         /// <summary>
         /// The max y-coordinate of the markers
         /// </summary>
-        private double _Ymax;
         public double Ymax { get => _Ymax; private set => _Ymax = value; }
+
+        private Dictionary<RowColIdx, HashSet<Color>> _BinColors;
 
         /// <summary>
         /// Map each [i, j] pixel index to a set of pixel colors. This is 
         /// because there are chances that multiple markers get mapped to
         /// one pixel.
         /// </summary>
-        private Dictionary<RowColIdx, HashSet<Color>> _BinColors;
         public Dictionary<RowColIdx, HashSet<Color>> BinColors
         {
             get => _BinColors;
             private set => _BinColors = value;
         }
 
+        /// <summary>
+        /// Constructor 
+        /// </summary>
+        /// <param name="NHPix"></param>
+        /// <param name="NVPix"></param>
+        /// <exception cref="ArgumentException"></exception>
         public MarkersToPixels(int NHPix, int NVPix)
         {
             if (NHPix <= 0 || NVPix <= 0)
@@ -93,13 +107,18 @@ namespace ImageDistorsion.PixelLayer
             }
         }
         
+        private List<NuMarker<Color>> _NMKs;
+
         /// <summary>
         /// The list of markers temporarily stored in the memory
         /// </summary>
-        private List<NuMarker<Color>> _NMKs;
         public List<NuMarker<Color>> NMKs {  get => _NMKs; private set => _NMKs = value; }
 
         private bool _LoadFinished;
+
+        /// <summary>
+        /// Whether the loading of markers has finished
+        /// </summary>
         public bool LoadFinished { get => _LoadFinished; private set => _LoadFinished = value; }
 
         /// <summary>
@@ -148,6 +167,10 @@ namespace ImageDistorsion.PixelLayer
         private double SpacingY => (Ymax - Ymin) / (NVertPixs - 1);
 
         private Color[,] _PixArray2D;
+
+        /// <summary>
+        /// The 2D array of pixels
+        /// </summary>
         public Color[,] PixArray2D { get => _PixArray2D; private set => _PixArray2D = value; }
 
         /// <summary>
@@ -209,6 +232,12 @@ namespace ImageDistorsion.PixelLayer
             // but were not.
         }
 
+        /// <summary>
+        /// Get the color of the pixel at the given row and column indexes
+        /// </summary>
+        /// <param name="colIdx"></param>
+        /// <param name="rowIdx"></param>
+        /// <returns></returns>
         public Color this[int colIdx, int rowIdx]
         {
             get
@@ -222,9 +251,21 @@ namespace ImageDistorsion.PixelLayer
         }
     }
 
+    /// <summary>
+    /// Wrapper for the row and column indexes
+    /// </summary>
+    /// <param name="rowIdx"></param>
+    /// <param name="colIdx"></param>
     public readonly struct RowColIdx(int rowIdx, int colIdx)
     {
+        /// <summary>
+        /// Row index
+        /// </summary>
         public int RowIdx { get; } = rowIdx;
+
+        /// <summary>
+        /// Column index
+        /// </summary>
         public int ColIdx { get; } = colIdx;
     }
 
